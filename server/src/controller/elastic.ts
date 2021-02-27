@@ -33,21 +33,18 @@ router.get("/", async (req, res) => {
 
 // rescrape and index results
 router.post("/", async (req, res) => {
-    // const chemicals: Chemical[] = [{
-    //     id: "12345",
-    //     substance: "testing 12345",
-    // }];
     const chemicals = await parseData();
+    await Elastic.Api.deleteAll(Elastic.ElasticIndex.CHEMICALS);
     await Elastic.Api.indexChemicals(chemicals);
 
+    // delete all and repopulate
+    await prisma.chemical.deleteMany({});
     const results = await Promise.all(chemicals.map(async c =>
         // no createmany for sqlite
         prisma.chemical.create({
             data: c
         }).catch((e: Error) => e)
     ));
-
-    // console.log(results);
 
     res.status(204).send();
 });

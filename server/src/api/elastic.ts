@@ -70,4 +70,20 @@ export class Api
         }
 
     }
+
+    static async deleteAll(indexName: ElasticIndex): Promise<void>
+    {
+        try
+        {
+            const results = (await axios({
+                method: "DELETE",
+                url: `${base}/${indexName}`,
+            })).data;
+        }
+        catch (error)
+        {
+            console.error(error);
+        }
+    }
+
 }
