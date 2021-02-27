@@ -16,10 +16,10 @@ const loadData = async (file: string) => {
             id: c["Identification Number"],
             substance: c["Substances and Materials"],
             identifier: c["Substance Identifier"],
-            scope: c["Scope<s>3</s>"],
-            threshold: c["Threshold Limit / Criteria<s>4</s>"],
+            scope: c["Scope"],
+            threshold: c["Threshold Limit / Criteria"],
             exemptions: c["Exemptions"],
-            reference: c["References<s>5</s>"]
+            reference: c["References"]
         } as Chemical);
     }
 
