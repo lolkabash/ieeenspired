@@ -25,8 +25,10 @@ with io.BytesIO(response.content) as f:
     # Here the metadata of your pdf
     print(txt)
     # numpage for the number page
-    numpage = 20
-    page = pdf.getPage(numpage)
-    page_content = page.extractText()
-    # print the content in the page 20
-    print(page_content)
+    for i in range(10, 21):
+        print(f"\n\nPage {i}\n\n")
+        numpage = i
+        page = pdf.getPage(numpage)
+        page_content = page.extractText()
+        # print the content in the page 20
+        print(page_content)
