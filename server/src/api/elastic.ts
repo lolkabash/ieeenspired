@@ -1,4 +1,4 @@
-import { Chemical } from "../types/chemical";
+import { Chemical } from "@prisma/client";
 import axios from "axios";
 
 const base = process.env.ELASTIC_SEARCH;

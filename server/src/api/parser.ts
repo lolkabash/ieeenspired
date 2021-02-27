@@ -1,6 +1,6 @@
 import parse from "csv-parse";
 import fs from "fs";
-import { Chemical } from "../types/chemical";
+import { Chemical } from "@prisma/client";
 
 const loadData = async (file: string) => {
     const parser = fs

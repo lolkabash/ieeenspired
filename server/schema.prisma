@@ -1,0 +1,18 @@
+datasource db {
+    provider = "sqlite"
+    url = env("SQLITE_DB")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Chemical {
+    id String @unique
+    substance String
+    identifier String
+    scope String
+    threshold String
+    exemptions String
+    reference String
+}
