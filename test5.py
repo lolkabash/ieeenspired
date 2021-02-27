@@ -1,8 +1,9 @@
-# Import Module
-import pdfx
+import re
 
-# Read PDF File
-pdf = pdfx.PDFx("c04932490.pdf")
 
-# Get list of URL
-print(pdf.get_references_as_dict())
+def remove_superscripts(string):
+    result = re.sub("<s\s*.*>\s*.*<\/s>", "", string)
+    return result
+
+
+print(remove_superscripts("Hello<s>3</s>"))
