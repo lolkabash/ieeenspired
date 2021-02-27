@@ -2,6 +2,7 @@ import express from "express";
 import * as Elastic from "../api/elastic";
 import { parseData } from "../api/parser";
 import prisma from "../lib/prisma";
+import { Chemical } from "@prisma/client";
 const router = express.Router();
 
 // query ?params
@@ -11,7 +12,23 @@ router.get("/", async (req, res) => {
     if (!query || !(typeof query === "string")) return res.status(400).send();
 
     const searchResults = await Elastic.Api.query(Elastic.ElasticIndex.CHEMICALS, query);
-    res.send(searchResults);
+    const idList = await prisma.chemical.findMany({
+        where: {
+            id: {
+                in: searchResults.map(s => s.source.id)
+            }
+        }
+    });
+
+    const mappedIds = idList.reduce((acc, i) => (acc[i.id] = i, acc), {} as { [key: string]: Chemical });
+    const fullResults = searchResults.map(s => ({
+        ...s,
+        source: {
+            ...mappedIds[s.source.id]
+        }
+    }));
+    
+    res.send(fullResults);
 });
 
 // rescrape and index results
