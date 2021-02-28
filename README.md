@@ -1,6 +1,6 @@
-## Specifications:
+# Specifications:
 
-# PS1:
+## PS1:
 
 1. Translate Sample Document (Chinese/Japanese > English)
 2. Extract Chemical Data & Transfer it to client_excel_sheet sorted by category
@@ -15,12 +15,12 @@
 
 ✔️ 4-8 ✔️ 
 
-# Additional Features:
-1. Analyse the various generated client_excel_sheet for:
+### Additional Features:
+Analyse the various generated client_excel_sheet for:
 > The most common requested chemicals (Graphs)
 > The least commonly requested chemical
 > Build a database of the various chemicals requested along with timestamp to show trend of client's request
 
-# To predict trends in sustainability.
+#### To predict trends in sustainability.
 
 ## To generate the lookup table, run `main.py`.
