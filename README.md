@@ -31,3 +31,17 @@ Analyse the various generated client_excel_sheet for:
 
 
 ### To generate the lookup table, run `main.py`.
+
+# Setup
+1. Install [Elasticsearch](https://www.elastic.co/downloads/elasticsearch)
+2. Setup .env
+
+Sample
+```
+PORT=3000
+ELASTIC_SEARCH=http://localhost:9200
+SQLITE_DB=file:./database.db
+```
+
+3. Run database migrations `npm run generate`
+4. Run server `npx ts-node .`
