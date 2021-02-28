@@ -17,9 +17,9 @@
 
 ### Additional Features:
 Analyse the various generated client_excel_sheet for:
-> The most common requested chemicals (Graphs)
-> The least commonly requested chemical
-> Build a database of the various chemicals requested along with timestamp to show trend of client's request
+- The most common requested chemicals (Graphs)
+- The least commonly requested chemical
+- Build a database of the various chemicals requested along with timestamp to show trend of client's request
 
 #### To predict trends in sustainability.
 
