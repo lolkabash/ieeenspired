@@ -23,4 +23,4 @@ Analyse the various generated client_excel_sheet for:
 
 #### To predict trends in sustainability.
 
-## To generate the lookup table, run `main.py`.
+### To generate the lookup table, run `main.py`.
