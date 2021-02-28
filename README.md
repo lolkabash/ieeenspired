@@ -1,0 +1,1 @@
+To generate the lookup table, run `main.py`.
