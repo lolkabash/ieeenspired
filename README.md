@@ -23,4 +23,11 @@ Analyse the various generated client_excel_sheet for:
 
 #### To predict trends in sustainability.
 
+### Dependencies:
+1. PyPDF2: `pip install PyPDF2`
+2. camelot: [Here](https://camelot-py.readthedocs.io/en/master/)
+3. `pandas`
+4. BeautifulSoup: `pip install beautifulsoup4`
+
+
 ### To generate the lookup table, run `main.py`.
