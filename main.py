@@ -4,7 +4,9 @@ import requests
 import io
 import camelot
 import pandas as pd
-
+import requests
+from bs4 import BeautifulSoup
+import re
 
 # Extracting all the bookmarks from PDF
 def bookmark_dict(pdf, bookmark_list):
@@ -76,9 +78,15 @@ def pdf_csv_generator(pdf, search_range):
     result.columns = headers
 
     # Export as CSV
-    # result.to_csv("sample1.csv")
-
+    csv_name = "data.csv"
+    result.to_csv(csv_name)
+    print(f"Created lookup file: {csv_name}")
     return result
+
+
+# Formatting list of ranges into strings
+def range_format(pages):
+    return "-".join(map(str, pages))
 
 
 # Variable URL PDF to get form search query for latest version
@@ -105,19 +113,21 @@ def onlinepdfparser(urlpdf):
         Number of pages: {number_of_pages}
         """
         # Here the metadata of your pdf
-        # print(txt)
+        print(txt)
 
         # Bookmarks of your pdf
         bookmarks = bookmark_dict(pdf, pdf.getOutlines())
         flipped_bookmarks = dict([(value, key) for key, value in bookmarks.items()])
         filtered_bookmarks = bookmark_filter(bookmarks, search_start, search_end)
         search_pages = list(filtered_bookmarks.values())
-        sp_string = "-".join(map(str, search_pages))
         range_pages = [
             item
             for item in flipped_bookmarks.keys()
             if search_pages[0] <= item <= search_pages[1]
         ]
+
+        # Variable Search
+        search_string = range_format(range_pages[1:3])
 
         # Debugging
         # print(bookmarks)
@@ -125,11 +135,72 @@ def onlinepdfparser(urlpdf):
         # print(flipped_bookmarks)
         # print(search_pages)
         # print(range_pages)
-        print(pdf_csv_generator(urlpdf, "14-30"))
-
+        # print(search_string)
+        print(pdf_csv_generator(urlpdf, search_string))
         return
 
 
+# Searching for latest document
+def get_link(search, results):
+    page = requests.get(f"https://www.google.com/search?q={search}&num={results}")
+    soup = BeautifulSoup(page.content, "html5lib")
+    links = soup.findAll("a")
+
+    extracted_links = []
+    for link in links:
+        link_href = link.get("href")
+        if "url?q=" in link_href and not "webcache" in link_href:
+            temp_link = link.get("href").split("?q=")[1].split("&sa=U")[0]
+            extracted_links.append(temp_link)
+    return extracted_links
+
+
 # Variables & Calling main function
-urlpdf = "https://h20195.www2.hp.com/v2/getpdf.aspx/c04932490.pdf"
-onlinepdfparser(urlpdf)
+
+# Main UI
+def run():
+    print(
+        """
+    Welcome to the tool to help you generate a data.csv lookup table
+    using the latest HP General Specification for Environment (GSE)
+    document available!
+    """
+    )
+
+    search = "HP General Specification for Environment (GSE) Substances and Materials Requirements"
+    results = 5  # valid options 10, 20, 30, 40, 50, and 100
+
+    print(
+        f"""
+    Searching using the search term: [{search}]
+    
+    Showing the first {results} results...
+    """
+    )
+
+    extracted_links = get_link(search, results)[0:5]
+
+    for link in extracted_links:
+        print(link)
+
+    urlpdf = extracted_links[0]
+
+    print(
+        f"""
+    Choosing the best option...
+    Selected: {urlpdf}
+    """
+    )
+
+    print(
+        """
+    Generating lookup table...
+    """
+    )
+
+    onlinepdfparser(urlpdf)
+
+    return
+
+
+run()
