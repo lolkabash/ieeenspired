@@ -10,8 +10,7 @@ const loadData = async (file: string) => {
         }));
 
     const records: Chemical[] = [];
-    for await (const c of parser)
-    {
+    for await (const c of parser) {
         records.push({
             id: c["Identification Number"],
             substance: c["Substances and Materials"],
@@ -26,8 +25,7 @@ const loadData = async (file: string) => {
     return records;
 }
 
-export async function parseData(): Promise<Chemical[]>
-{
-    const a = await loadData(`./sample.csv`);
+export async function parseData(): Promise<Chemical[]> {
+    const a = await loadData(`../data.csv`);
     return a;
 }
