@@ -1,6 +1,6 @@
 # Specifications:
 
-## PS1:
+## Problem Statement 1 (HP):
 
 1. Translate Sample Document (Chinese/Japanese > English)
 2. Extract Chemical Data & Transfer it to client_excel_sheet sorted by category
